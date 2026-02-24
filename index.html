@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InBoundReady | AI Receptionist That Never Misses a Call</title>
+    <meta name="description" content="AI-powered phone agent for small businesses. Answer every call 24/7, book appointments, and never lose a customer to voicemail again. Medical, legal, home services & more.">
+    <meta name="keywords" content="AI receptionist, virtual receptionist, AI phone agent, never miss a call, 24/7 answering service, small business phone agent">
+    <link rel="canonical" href="https://inboundready.com">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="InBoundReady | Never Miss Another Customer Call">
+    <meta property="og:description" content="AI-powered receptionist that answers every call 24/7 — so you never lose business to voicemail again.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inboundready.com">
+    <meta property="og:image" content="https://inboundready.com/assets/og-image.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="InBoundReady | Never Miss Another Customer Call">
+    <meta name="twitter:description" content="AI-powered receptionist that answers every call 24/7.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#DC2626',
+                            'red-dark': '#B91C1C',
+                            'red-light': '#EF4444',
+                            black: '#0A0A0A',
+                            dark: '#111111',
+                            charcoal: '#1A1A1A',
+                            slate: '#2A2A2A',
+                            gray: '#6B7280',
+                            'gray-light': '#9CA3AF',
+                            white: '#FFFFFF',
+                            cream: '#F9FAFB',
+                        }
+                    },
+                    fontFamily: {
+                        display: ['Outfit', 'sans-serif'],
+                        body: ['DM Sans', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* ═══════════════════════════════════════════════
+           CUSTOM STYLES — InBoundReady
+           ═══════════════════════════════════════════════ */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #0A0A0A;
+            color: #F9FAFB;
+            overflow-x: hidden;
+        }
+
+        /* ── Grain Overlay ── */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ── Nav ── */
+        .nav-scrolled {
+            background: rgba(10, 10, 10, 0.95) !important;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(220, 38, 38, 0.15);
+        }
+
+        /* ── Hero Glow ── */
+        .hero-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(220, 38, 38, 0.15) 0%, transparent 70%);
+            top: -200px;
+            right: -100px;
+            pointer-events: none;
+        }
+
+        .hero-glow-2 {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(220, 38, 38, 0.08) 0%, transparent 70%);
+            bottom: -100px;
+            left: -100px;
+            pointer-events: none;
+        }
+
+        /* ── Phone Ring Animation ── */
+        @keyframes ring {
+            0% { transform: rotate(0deg); }
+            5% { transform: rotate(15deg); }
+            10% { transform: rotate(-13deg); }
+            15% { transform: rotate(14deg); }
+            20% { transform: rotate(-12deg); }
+            25% { transform: rotate(10deg); }
+            30% { transform: rotate(0deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        .phone-ring {
+            animation: ring 3s ease-in-out infinite;
+            transform-origin: 50% 0;
+        }
+
+        /* ── Pulse Animation for CTA ── */
+        @keyframes pulse-red {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.5); }
+            50% { box-shadow: 0 0 0 12px rgba(220, 38, 38, 0); }
+        }
+
+        .cta-pulse {
+            animation: pulse-red 2.5s ease-in-out infinite;
+        }
+
+        /* ── Scroll Reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* ── Stagger children ── */
+        .stagger > * {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .stagger.visible > *:nth-child(1) { transition-delay: 0ms; opacity: 1; transform: translateY(0); }
+        .stagger.visible > *:nth-child(2) { transition-delay: 100ms; opacity: 1; transform: translateY(0); }
+        .stagger.visible > *:nth-child(3) { transition-delay: 200ms; opacity: 1; transform: translateY(0); }
+        .stagger.visible > *:nth-child(4) { transition-delay: 300ms; opacity: 1; transform: translateY(0); }
+        .stagger.visible > *:nth-child(5) { transition-delay: 400ms; opacity: 1; transform: translateY(0); }
+        .stagger.visible > *:nth-child(6) { transition-delay: 500ms; opacity: 1; transform: translateY(0); }
+
+        /* ── Stat Counter ── */
+        .stat-number {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* ── Red Line Accent ── */
+        .red-line::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: #DC2626;
+            margin-top: 16px;
+            border-radius: 2px;
+        }
+
+        .red-line-center::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: #DC2626;
+            margin: 16px auto 0;
+            border-radius: 2px;
+        }
+
+        /* ── Gradient Border Card ── */
+        .card-gradient {
+            position: relative;
+            background: #1A1A1A;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .card-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #DC2626, transparent);
+        }
+
+        /* ── FAQ Accordion ── */
+        .faq-item input[type="checkbox"] {
+            display: none;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.4s ease;
+            padding: 0 24px;
+        }
+
+        .faq-item input:checked ~ .faq-answer {
+            max-height: 300px;
+            padding: 0 24px 24px;
+        }
+
+        .faq-item input:checked ~ label .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        /* ── Horizontal scroll line ── */
+        .scroll-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: #DC2626;
+            z-index: 100;
+            transition: width 0.1s linear;
+        }
+
+        /* ── Before/After Grid Lines ── */
+        .grid-line {
+            background: linear-gradient(to bottom, rgba(220, 38, 38, 0.1), transparent);
+            width: 1px;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+        }
+
+        /* ── Mobile Menu ── */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* ── Reduced Motion ── */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .reveal, .reveal-left, .reveal-right { opacity: 1; transform: none; }
+            .stagger > * { opacity: 1; transform: none; }
+        }
+
+        /* ── Selection Color ── */
+        ::selection {
+            background: rgba(220, 38, 38, 0.3);
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body class="font-body antialiased">
+
+    <!-- ═══════════════════════════════════════════
+         SCROLL PROGRESS BAR
+         ═══════════════════════════════════════════ -->
+    <div class="scroll-line" id="scrollLine"></div>
+
+    <!-- ═══════════════════════════════════════════
+         NAVIGATION
+         ═══════════════════════════════════════════ -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 shrink-0">
+                    <img src="assets/phone-logo.png" alt="InBoundReady" class="h-12 w-auto">
+                </a>
+
+                <!-- Desktop Nav Links -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#how-it-works" class="text-brand-gray-light hover:text-white transition-colors text-sm font-medium tracking-wide uppercase">How It Works</a>
+                    <a href="#features" class="text-brand-gray-light hover:text-white transition-colors text-sm font-medium tracking-wide uppercase">Features</a>
+                    <a href="#industries" class="text-brand-gray-light hover:text-white transition-colors text-sm font-medium tracking-wide uppercase">Industries</a>
+                    <a href="#faq" class="text-brand-gray-light hover:text-white transition-colors text-sm font-medium tracking-wide uppercase">FAQ</a>
+                    <a href="https://calendly.com/beausterling/15min" target="_blank" rel="noopener"
+                       class="bg-brand-red hover:bg-brand-red-dark text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 text-sm tracking-wide hover:scale-105 active:scale-95">
+                        Book a Free Call
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="menuBtn" class="md:hidden p-2 text-white" aria-label="Open menu">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenu" class="mobile-menu fixed inset-0 z-50 bg-brand-black/98 backdrop-blur-xl flex flex-col items-center justify-center gap-8">
+        <button id="menuClose" class="absolute top-6 right-6 p-2 text-white" aria-label="Close menu">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+        <a href="#how-it-works" class="mobile-link text-2xl font-display font-bold text-white hover:text-brand-red transition-colors">How It Works</a>
+        <a href="#features" class="mobile-link text-2xl font-display font-bold text-white hover:text-brand-red transition-colors">Features</a>
+        <a href="#industries" class="mobile-link text-2xl font-display font-bold text-white hover:text-brand-red transition-colors">Industries</a>
+        <a href="#faq" class="mobile-link text-2xl font-display font-bold text-white hover:text-brand-red transition-colors">FAQ</a>
+        <a href="https://calendly.com/beausterling/15min" target="_blank" rel="noopener"
+           class="mt-4 bg-brand-red hover:bg-brand-red-dark text-white font-bold px-8 py-4 rounded-lg transition-all text-lg">
+            Book a Free Call
+        </a>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════
+         HERO SECTION
+         ═══════════════════════════════════════════ -->
+    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <div class="hero-glow"></div>
+        <div class="hero-glow-2"></div>
+
+        <!-- Subtle grid background -->
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px); background-size: 60px 60px;"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <!-- Copy -->
+                <div class="text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 bg-brand-red/10 border border-brand-red/20 rounded-full px-4 py-1.5 mb-6">
+                        <span class="w-2 h-2 bg-brand-red rounded-full animate-pulse"></span>
+                        <span class="text-brand-red text-sm font-semibold tracking-wide">AI-Powered. Always On.</span>
+                    </div>
+
+                    <h1 class="font-display font-900 text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight mb-6">
+                        Never Miss
+                        <span class="block text-brand-red">Another Call.</span>
+                        <span class="block text-brand-gray-light text-3xl sm:text-4xl md:text-5xl mt-2">Never Lose Another Customer.</span>
+                    </h1>
+
+                    <p class="text-lg sm:text-xl text-brand-gray-light leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0">
+                        Your AI receptionist answers every call instantly &mdash; 24/7, 365 days a year. It handles inquiries, books appointments, and routes urgent calls. No hold music. No voicemail. No lost revenue.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="https://calendly.com/beausterling/15min" target="_blank" rel="noopener"
+                           class="cta-pulse inline-flex items-center justify-center gap-2 bg-brand-red hover:bg-brand-red-dark text-white font-bold px-8 py-4 rounded-lg transition-all duration-200 text-lg hover:scale-105 active:scale-95">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            Book Your Free Strategy Call
+                        </a>
+                        <a href="tel:+12069813137"
+                           class="inline-flex items-center justify-center gap-2 border border-white/20 hover:border-brand-red/50 text-white font-semibold px-8 py-4 rounded-lg transition-all duration-200 text-lg hover:bg-white/5">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                            Call Us Now
+                        </a>
+                    </div>
+
+                    <p class="mt-6 text-sm text-brand-gray">No contracts. No setup fees. Live in under 24 hours.</p>
+                </div>
+
+                <!-- Hero Visual -->
+                <div class="relative flex items-center justify-center lg:justify-end">
+                    <div class="relative">
+                        <!-- Glowing ring behind phone -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-72 h-72 sm:w-80 sm:h-80 rounded-full border border-brand-red/20 animate-pulse"></div>
+                        </div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-96 h-96 rounded-full border border-brand-red/10" style="animation: pulse 3s ease-in-out infinite 0.5s;"></div>
+                        </div>
+                        <img src="assets/phone-logo.png" alt="InBoundReady AI Receptionist" class="phone-ring relative z-10 w-56 sm:w-64 md:w-72 lg:w-80 drop-shadow-2xl">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+            <span class="text-xs text-brand-gray tracking-widest uppercase">Scroll</span>
+            <svg class="w-5 h-5 text-brand-gray" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         SOCIAL PROOF BAR
+         ═══════════════════════════════════════════ -->
+    <section class="relative bg-brand-charcoal border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 stagger" id="statsBar">
+                <div class="text-center">
+                    <div class="stat-number font-display font-900 text-3xl sm:text-4xl text-brand-red"><span data-target="62">0</span>%</div>
+                    <p class="text-sm text-brand-gray-light mt-2">of small business calls go unanswered</p>
+                </div>
+                <div class="text-center">
+                    <div class="stat-number font-display font-900 text-3xl sm:text-4xl text-brand-red"><span data-target="85">0</span>%</div>
+                    <p class="text-sm text-brand-gray-light mt-2">of callers won't leave a voicemail</p>
+                </div>
+                <div class="text-center">
+                    <div class="stat-number font-display font-900 text-3xl sm:text-4xl text-white">$<span data-target="1200">0</span></div>
+                    <p class="text-sm text-brand-gray-light mt-2">average revenue lost per missed call</p>
+                </div>
+                <div class="text-center">
+                    <div class="stat-number font-display font-900 text-3xl sm:text-4xl text-white"><span data-target="24">0</span>/7</div>
+                    <p class="text-sm text-brand-gray-light mt-2">InBoundReady answers every call</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         THE PROBLEM
+         ═══════════════════════════════════════════ -->
+    <section class="relative py-20 md:py-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16 reveal">
+                <span class="text-brand-red text-sm font-bold tracking-widest uppercase">The Silent Revenue Leak</span>
+                <h2 class="font-display font-800 text-3xl sm:text-4xl md:text-5xl mt-4 leading-tight red-line-center">
+                    Right Now, Your Phone Is Costing You Thousands
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
+                <!-- Problem 1 -->
+                <div class="card-gradient p-8 reveal" style="transition-delay: 0ms;">
+                    <div class="w-14 h-14 bg-brand-red/10 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+                    </div>
+                    <h3 class="font-display font-700 text-xl mb-3">You're On a Job. The Phone Rings.</h3>
+                    <p class="text-brand-gray-light leading-relaxed">You're elbow-deep in a project, with a patient, or in a meeting. You can't answer. That caller needed you <em>right now</em> &mdash; and they're not waiting.</p>
+                </div>
+
+                <!-- Problem 2 -->
+                <div class="card-gradient p-8 reveal" style="transition-delay: 150ms;">
+                    <div class="w-14 h-14 bg-brand-red/10 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                    </div>
+                    <h3 class="font-display font-700 text-xl mb-3">Your Competitor Picks Up Instead.</h3>
+                    <p class="text-brand-gray-light leading-relaxed">That potential customer doesn't try again. They call the next business on Google. Your competitor answers, books the job, and earns the revenue that should've been yours.</p>
+                </div>
+
+                <!-- Problem 3 -->
+                <div class="card-gradient p-8 reveal" style="transition-delay: 300ms;">
+                    <div class="w-14 h-14 bg-brand-red/10 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <h3 class="font-display font-700 text-xl mb-3">The Damage Compounds Daily.</h3>
+                    <p class="text-brand-gray-light leading-relaxed">It's not one missed call. It's dozens every month. At $1,200 average per lost opportunity, you're hemorrhaging $50,000+ per year in revenue you never even see.</p>
+                </div>
+            </div>
+
+            <!-- Agitation -->
+            <div class="mt-16 text-center reveal">
+                <div class="inline-block bg-brand-red/5 border border-brand-red/20 rounded-2xl p-8 md:p-10 max-w-2xl">
+                    <p class="text-xl md:text-2xl font-display font-600 leading-relaxed">
+                        &ldquo;Voicemail is where your leads go to <span class="text-brand-red font-800">die</span>.&rdquo;
+                    </p>
+                    <p class="text-brand-gray mt-4 text-sm">The average business doesn't realize how many customers they lose before it's too late.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         HOW IT WORKS
+         ═══════════════════════════════════════════ -->
+    <section id="how-it-works" class="relative py-20 md:py-32 bg-brand-charcoal">
+        <!-- Decorative accent -->
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-red/30 to-transparent"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16 reveal">
+                <span class="text-brand-red text-sm font-bold tracking-widest uppercase">Simple Setup</span>
+                <h2 class="font-display font-800 text-3xl sm:text-4xl md:text-5xl mt-4 leading-tight red-line-center">
+                    How InBoundReady Works
+                </h2>
+                <p class="text-brand-gray-light mt-6 text-lg">Three steps. That's it. Your AI receptionist is answering calls within 24 hours.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 lg:gap-12 relative">
+                <!-- Connecting line (desktop) -->
+                <div class="hidden md:block absolute top-24 left-1/6 right-1/6 h-px bg-gradient-to-r from-brand-red/30 via-brand-red/50 to-brand-red/30"></div>
+
+                <!-- Step 1 -->
+                <div class="relative text-center reveal" style="transition-delay: 0ms;">
+                    <div class="relative z-10 w-16 h-16 bg-brand-red rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-brand-red/20">
+                        <span class="font-display font-900 text-2xl text-white">1</span>
+                    </div>
+                    <h3 class="font-display font-700 text-xl mb-3">Tell Us About Your Business</h3>
+                    <p class="text-brand-gray-light leading-relaxed">Book a quick strategy call. We'll learn your business, your services, your hours, and how you want calls handled. Every AI is custom to <em>you</em>.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative text-center reveal" style="transition-delay: 150ms;">
+                    <div class="relative z-10 w-16 h-16 bg-brand-red rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-brand-red/20">
+                        <span class="font-display font-900 text-2xl text-white">2</span>
+                    </div>
+                    <h3 class="font-display font-700 text-xl mb-3">We Build & Train Your AI Agent</h3>
+                    <p class="text-brand-gray-light leading-relaxed">Our team configures your AI receptionist with your business knowledge, scripts, and call routing rules. It sounds natural and represents your brand perfectly.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative text-center reveal" style="transition-delay: 300ms;">
+                    <div class="relative z-10 w-16 h-16 bg-brand-red rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-brand-red/20">
+                        <span class="font-display font-900 text-2xl text-white">3</span>
+                    </div>
+                    <h3 class="font-display font-700 text-xl mb-3">Go Live &amp; Never Miss Again</h3>
+                    <p class="text-brand-gray-light leading-relaxed">Calls start getting answered instantly. You get real-time notifications, appointment bookings, and a dashboard showing every interaction. Revenue recovered.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-red/30 to-transparent"></div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         FEATURES
+         ═══════════════════════════════════════════ -->
+    <section id="features" class="relative py-20 md:py-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16 reveal">
+                <span class="text-brand-red text-sm font-bold tracking-widest uppercase">Capabilities</span>
+                <h2 class="font-display font-800 text-3xl sm:text-4xl md:text-5xl mt-4 leading-tight red-line-center">
+                    More Than an Answering Service
+                </h2>
+                <p class="text-brand-gray-light mt-6 text-lg">Your AI receptionist doesn't just pick up the phone. It handles the entire customer interaction &mdash; intelligently.</p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 stagger" id="featuresGrid">
+                <!-- Feature 1 -->
+                <div class="group card-gradient p-8 hover:bg-brand-slate transition-colors duration-300">
+                    <div class="w-12 h-12 bg-brand-red/10 group-hover:bg-brand-red/20 rounded-xl flex items-center justify-center mb-5 transition-colors">
+                        <svg class="w-6 h-6 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <h3 class="font-display font-700 text-lg mb-2">24/7/365 Availability</h3>
+                    <p class="text-brand-gray-light text-sm leading-relaxed">Weekends, holidays, 3 AM &mdash; your AI answers every call with the same energy and professionalism. Never off duty.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="group card-gradient p-8 hover:bg-brand-slate transition-colors duration-300">
+                    <div class="w-12 h-12 bg-brand-red/10 group-hover:bg-brand-red/20 rounded-xl flex items-center justify-center mb-5 transition-colors">
+                        <svg class="w-6 h-6 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </div>
+                    <h3 class="font-display font-700 text-lg mb-2">Instant Appointment Booking</h3>
+                    <p class="text-brand-gray-light text-sm leading-relaxed">Syncs with your calendar and books appointments in real time. No back-and-forth. The customer hangs up with a confirmed slot.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="group card-gradient p-8 hover:bg-brand-slate transition-colors duration-300">
+                    <div class="w-12 h-12 bg-brand-red/10 group-hover:bg-brand-red/20 rounded-xl flex items-center justify-center mb-5 transition-colors">
+                        <svg class="w-6 h-6 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                    </div>
+                    <h3 class="font-display font-700 text-lg mb-2">Natural Conversations</h3>
+                    <p class="text-brand-gray-light text-sm leading-relaxed">No robotic scripts. Your AI holds fluid, natural conversations. Callers routinely can't tell it's not a human receptionist.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="group card-gradient p-8 hover:bg-brand-slate transition-colors duration-300">
+                    <div class="w-12 h-12 bg-brand-red/10 group-hover:bg-brand-red/20 rounded-xl flex items-center justify-center mb-5 transition-colors">
+                        <svg class="w-6 h-6 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <h3 class="font-display font-700 text-lg mb-2">Urgent Call Routing</h3>
+                    <p class="text-brand-gray-light text-sm leading-relaxed">Emergencies don't wait. Your AI detects urgency and routes critical calls directly to you or your on-call team instantly.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="group card-gradient p-8 hover:bg-brand-slate transition-colors duration-300">
+                    <div class="w-12 h-12 bg-brand-red/10 group-hover:bg-brand-red/20 rounded-xl flex items-center justify-center mb-5 transition-colors">
+                        <svg class="w-6 h-6 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    </div>
+                    <h3 class="font-display font-700 text-lg mb-2">FAQ Handling</h3>
+                    <p class="text-brand-gray-light text-sm leading-relaxed">Hours, pricing, directions, services &mdash; your AI answers the questions your staff fields dozens of times a day, freeing your team to focus.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="group card-gradient p-8 hover:bg-brand-slate transition-colors duration-300">
+                    <div class="w-12 h-12 bg-brand-red/10 group-hover:bg-brand-red/20 rounded-xl flex items-center justify-center mb-5 transition-colors">
+                        <svg class="w-6 h-6 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                    </div>
+                    <h3 class="font-display font-700 text-lg mb-2">Real-Time Dashboard</h3>
+                    <p class="text-brand-gray-light text-sm leading-relaxed">See every call, every booking, every inquiry in one place. Full transcripts, analytics, and insights so you know exactly what's happening.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         BEFORE / AFTER
+         ═══════════════════════════════════════════ -->
+    <section class="relative py-20 md:py-32 bg-brand-charcoal overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-red/30 to-transparent"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16 reveal">
+                <span class="text-brand-red text-sm font-bold tracking-widest uppercase">The Transformation</span>
+                <h2 class="font-display font-800 text-3xl sm:text-4xl md:text-5xl mt-4 leading-tight red-line-center">
+                    Before vs. After InBoundReady
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Before -->
+                <div class="reveal-left rounded-2xl border border-white/10 bg-brand-dark p-8 md:p-10 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-brand-gray/30"></div>
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-brand-gray" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </div>
+                        <span class="font-display font-700 text-lg text-brand-gray">Without InBoundReady</span>
+                    </div>
+                    <ul class="space-y-5">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-gray shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>
+                            <span class="text-brand-gray-light">Missed calls during business hours</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-gray shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>
+                            <span class="text-brand-gray-light">Zero coverage after hours &amp; weekends</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-gray shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>
+                            <span class="text-brand-gray-light">Customers sent to voicemail</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-gray shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>
+                            <span class="text-brand-gray-light">Revenue walking out the door daily</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-gray shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>
+                            <span class="text-brand-gray-light">No idea how many leads you're losing</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- After -->
+                <div class="reveal-right rounded-2xl border border-brand-red/20 bg-brand-dark p-8 md:p-10 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-brand-red"></div>
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="w-10 h-10 rounded-full bg-brand-red/10 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        </div>
+                        <span class="font-display font-700 text-lg text-brand-red">With InBoundReady</span>
+                    </div>
+                    <ul class="space-y-5">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-red shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span class="text-white">Every single call answered instantly</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-red shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span class="text-white">24/7 coverage, 365 days a year</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-red shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span class="text-white">Appointments booked automatically</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-red shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span class="text-white">Zero revenue left on the table</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-red shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span class="text-white">Full visibility into every call &amp; lead</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-red/30 to-transparent"></div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         INDUSTRIES
+         ═══════════════════════════════════════════ -->
+    <section id="industries" class="relative py-20 md:py-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16 reveal">
+                <span class="text-brand-red text-sm font-bold tracking-widest uppercase">Industries We Serve</span>
+                <h2 class="font-display font-800 text-3xl sm:text-4xl md:text-5xl mt-4 leading-tight red-line-center">
+                    Built for Businesses That Can't Afford to Miss a Call
+                </h2>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 stagger" id="industriesGrid">
+                <!-- Medical -->
+                <div class="group card-gradient p-8 hover:bg-brand-slate transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-4xl mb-4">🏥</div>
+                    <h3 class="font-display font-700 text-xl mb-2">Medical &amp; Dental</h3>
+                    <p class="text-brand-gray-light text-sm leading-relaxed">Patients call during your busiest hours. Your AI books appointments, handles prescription refill requests, and provides office hours &mdash; while you focus on patient care.</p>
+                </div>
+
+                <!-- Legal -->
+                <div class="group card-gradient p-8 hover:bg-brand-slate transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-4xl mb-4">⚖️</div>
+                    <h3 class="font-display font-700 text-xl mb-2">Law Firms</h3>
+                    <p class="text-brand-gray-light text-sm leading-relaxed">A potential client calls once. If nobody answers, they call another firm. Your AI captures case details, qualifies leads, and schedules consultations on the spot.</p>
+                </div>
+
+                <!-- HVAC / Plumbing -->
+                <div class="group card-gradient p-8 hover:bg-brand-slate transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-4xl mb-4">🔧</div>
+                    <h3 class="font-display font-700 text-xl mb-2">HVAC &amp; Plumbing</h3>
+                    <p class="text-brand-gray-light text-sm leading-relaxed">Your hands are literally full. Your AI fields service calls, qualifies the job, schedules the visit, and routes emergencies to your on-call tech immediately.</p>
+                </div>
+
+                <!-- Landscaping -->
+                <div class="group card-gradient p-8 hover:bg-brand-slate transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-4xl mb-4">🌿</div>
+                    <h3 class="font-display font-700 text-xl mb-2">Landscaping</h3>
+                    <p class="text-brand-gray-light text-sm leading-relaxed">You're outside all day. Every missed call is a missed estimate. Your AI handles new inquiries, provides service info, and locks in appointments while you work.</p>
+                </div>
+
+                <!-- Real Estate -->
+                <div class="group card-gradient p-8 hover:bg-brand-slate transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-4xl mb-4">🏠</div>
+                    <h3 class="font-display font-700 text-xl mb-2">Real Estate</h3>
+                    <p class="text-brand-gray-light text-sm leading-relaxed">Buyer leads are time-sensitive. Your AI qualifies callers, shares property details, and schedules showings before they move on to the next agent.</p>
+                </div>
+
+                <!-- General -->
+                <div class="group card-gradient p-8 hover:bg-brand-slate transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-4xl mb-4">💼</div>
+                    <h3 class="font-display font-700 text-xl mb-2">Any Small Business</h3>
+                    <p class="text-brand-gray-light text-sm leading-relaxed">If your business gets phone calls and you can't always answer, InBoundReady was built for you. Custom-trained for any industry, any workflow.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         RESULTS / SOCIAL PROOF
+         ═══════════════════════════════════════════ -->
+    <section class="relative py-20 md:py-32 bg-brand-charcoal overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-red/30 to-transparent"></div>
+
+        <!-- Big red glow -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-brand-red/5 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16 reveal">
+                <span class="text-brand-red text-sm font-bold tracking-widest uppercase">Proven Results</span>
+                <h2 class="font-display font-800 text-3xl sm:text-4xl md:text-5xl mt-4 leading-tight red-line-center">
+                    AI Voice Agents Are Transforming Small Businesses
+                </h2>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 stagger" id="resultsGrid">
+                <div class="text-center p-8 rounded-2xl bg-brand-dark border border-white/5">
+                    <div class="font-display font-900 text-4xl md:text-5xl text-brand-red mb-2">35%</div>
+                    <p class="text-brand-gray-light text-sm">increase in booked appointments with AI answering</p>
+                </div>
+                <div class="text-center p-8 rounded-2xl bg-brand-dark border border-white/5">
+                    <div class="font-display font-900 text-4xl md:text-5xl text-white mb-2">$50K+</div>
+                    <p class="text-brand-gray-light text-sm">average annual revenue recovered from missed calls</p>
+                </div>
+                <div class="text-center p-8 rounded-2xl bg-brand-dark border border-white/5">
+                    <div class="font-display font-900 text-4xl md:text-5xl text-brand-red mb-2">97%</div>
+                    <p class="text-brand-gray-light text-sm">caller satisfaction rate with AI voice interactions</p>
+                </div>
+                <div class="text-center p-8 rounded-2xl bg-brand-dark border border-white/5">
+                    <div class="font-display font-900 text-4xl md:text-5xl text-white mb-2">0.5s</div>
+                    <p class="text-brand-gray-light text-sm">average answer time &mdash; faster than any human receptionist</p>
+                </div>
+            </div>
+
+            <!-- Testimonial-style quote -->
+            <div class="mt-16 max-w-3xl mx-auto text-center reveal">
+                <div class="bg-brand-dark border border-white/5 rounded-2xl p-8 md:p-12">
+                    <svg class="w-10 h-10 text-brand-red/30 mx-auto mb-6" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                    <p class="text-xl md:text-2xl font-display font-500 leading-relaxed text-white/90 italic">
+                        Businesses across medical, legal, and home service industries report that AI voice agents pay for themselves within the first month by capturing calls that would have otherwise been lost.
+                    </p>
+                    <p class="mt-6 text-brand-gray text-sm">Industry data from AI voice technology adoption studies</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-red/30 to-transparent"></div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         FAQ
+         ═══════════════════════════════════════════ -->
+    <section id="faq" class="relative py-20 md:py-32">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-brand-red text-sm font-bold tracking-widest uppercase">Common Questions</span>
+                <h2 class="font-display font-800 text-3xl sm:text-4xl md:text-5xl mt-4 leading-tight red-line-center">
+                    Frequently Asked Questions
+                </h2>
+            </div>
+
+            <div class="space-y-4 reveal">
+                <!-- FAQ 1 -->
+                <div class="faq-item card-gradient">
+                    <input type="checkbox" id="faq1">
+                    <label for="faq1" class="flex items-center justify-between p-6 cursor-pointer hover:bg-brand-slate/50 transition-colors">
+                        <span class="font-display font-600 text-lg pr-4">How natural does the AI actually sound?</span>
+                        <span class="faq-icon text-brand-red text-2xl font-light shrink-0">+</span>
+                    </label>
+                    <div class="faq-answer">
+                        <p class="text-brand-gray-light leading-relaxed">Extremely natural. We use the latest conversational AI technology. The voice is warm, responsive, and handles interruptions and follow-up questions just like a real person. Most callers have no idea they're speaking with an AI. We custom-tune the tone and personality to match your brand.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="faq-item card-gradient">
+                    <input type="checkbox" id="faq2">
+                    <label for="faq2" class="flex items-center justify-between p-6 cursor-pointer hover:bg-brand-slate/50 transition-colors">
+                        <span class="font-display font-600 text-lg pr-4">Do I need to change my phone number?</span>
+                        <span class="faq-icon text-brand-red text-2xl font-light shrink-0">+</span>
+                    </label>
+                    <div class="faq-answer">
+                        <p class="text-brand-gray-light leading-relaxed">No. InBoundReady works with your existing business phone number. We set up intelligent call forwarding so calls route to your AI agent seamlessly. Your customers dial the same number they always have.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="faq-item card-gradient">
+                    <input type="checkbox" id="faq3">
+                    <label for="faq3" class="flex items-center justify-between p-6 cursor-pointer hover:bg-brand-slate/50 transition-colors">
+                        <span class="font-display font-600 text-lg pr-4">What happens if there's an urgent call?</span>
+                        <span class="faq-icon text-brand-red text-2xl font-light shrink-0">+</span>
+                    </label>
+                    <div class="faq-answer">
+                        <p class="text-brand-gray-light leading-relaxed">Your AI is trained to detect urgency. If a caller has an emergency or time-sensitive issue, the AI immediately routes the call to you or your designated on-call team member via live transfer. You stay in control of what counts as "urgent" for your business.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="faq-item card-gradient">
+                    <input type="checkbox" id="faq4">
+                    <label for="faq4" class="flex items-center justify-between p-6 cursor-pointer hover:bg-brand-slate/50 transition-colors">
+                        <span class="font-display font-600 text-lg pr-4">How fast can I get set up?</span>
+                        <span class="faq-icon text-brand-red text-2xl font-light shrink-0">+</span>
+                    </label>
+                    <div class="faq-answer">
+                        <p class="text-brand-gray-light leading-relaxed">Most businesses are live within 24 hours of their strategy call. We handle all the configuration, training, and testing. You just tell us about your business, approve the setup, and start answering every call.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="faq-item card-gradient">
+                    <input type="checkbox" id="faq5">
+                    <label for="faq5" class="flex items-center justify-between p-6 cursor-pointer hover:bg-brand-slate/50 transition-colors">
+                        <span class="font-display font-600 text-lg pr-4">Can it handle my specific business needs?</span>
+                        <span class="faq-icon text-brand-red text-2xl font-light shrink-0">+</span>
+                    </label>
+                    <div class="faq-answer">
+                        <p class="text-brand-gray-light leading-relaxed">Yes. Every InBoundReady AI agent is custom-built for your business. We train it on your services, pricing, FAQs, scheduling rules, and call handling preferences. Whether you're a dentist, a plumber, or a law firm &mdash; it speaks your language.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 6 -->
+                <div class="faq-item card-gradient">
+                    <input type="checkbox" id="faq6">
+                    <label for="faq6" class="flex items-center justify-between p-6 cursor-pointer hover:bg-brand-slate/50 transition-colors">
+                        <span class="font-display font-600 text-lg pr-4">Is there a long-term contract?</span>
+                        <span class="faq-icon text-brand-red text-2xl font-light shrink-0">+</span>
+                    </label>
+                    <div class="faq-answer">
+                        <p class="text-brand-gray-light leading-relaxed">No long-term contracts. We believe in earning your business every month. If InBoundReady isn't delivering results (it will), you can cancel anytime. Most clients stay because the ROI is undeniable from month one.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         FINAL CTA
+         ═══════════════════════════════════════════ -->
+    <section class="relative py-20 md:py-32 overflow-hidden">
+        <!-- Red gradient background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-brand-red/10 via-brand-black to-brand-black"></div>
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-red/30 to-transparent"></div>
+
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="reveal">
+                <div class="inline-flex items-center gap-2 bg-brand-red/10 border border-brand-red/20 rounded-full px-4 py-1.5 mb-6">
+                    <span class="w-2 h-2 bg-brand-red rounded-full animate-pulse"></span>
+                    <span class="text-brand-red text-sm font-semibold">Limited Availability</span>
+                </div>
+
+                <h2 class="font-display font-900 text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight mb-6">
+                    Stop Losing Customers<br>
+                    <span class="text-brand-red">to Voicemail</span>
+                </h2>
+
+                <p class="text-lg sm:text-xl text-brand-gray-light leading-relaxed max-w-2xl mx-auto mb-10">
+                    Book a free 15-minute strategy call. We'll show you exactly how many calls you're missing &mdash; and how InBoundReady captures every single one. No pressure. No commitment. Just clarity.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="https://calendly.com/beausterling/15min" target="_blank" rel="noopener"
+                       class="cta-pulse inline-flex items-center justify-center gap-3 bg-brand-red hover:bg-brand-red-dark text-white font-bold px-10 py-5 rounded-xl transition-all duration-200 text-lg hover:scale-105 active:scale-95 shadow-2xl shadow-brand-red/20">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        Book My Free Strategy Call
+                    </a>
+                </div>
+
+                <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-brand-gray">
+                    <span class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        No contracts
+                    </span>
+                    <span class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        No setup fees
+                    </span>
+                    <span class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        Live in 24 hours
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════ -->
+    <footer class="bg-brand-dark border-t border-white/5 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-3">
+                    <img src="assets/phone-logo.png" alt="InBoundReady" class="h-10 w-auto">
+                </div>
+
+                <div class="flex items-center gap-6 text-sm text-brand-gray">
+                    <a href="tel:+12069813137" class="hover:text-white transition-colors flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                        (206) 981-3137
+                    </a>
+                    <a href="https://calendly.com/beausterling/15min" target="_blank" rel="noopener" class="hover:text-white transition-colors">
+                        Book a Call
+                    </a>
+                </div>
+
+                <p class="text-xs text-brand-gray/60">&copy; 2025 InBoundReady. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ═══════════════════════════════════════════
+         JAVASCRIPT
+         ═══════════════════════════════════════════ -->
+    <script>
+        // ── Scroll Progress Bar ──
+        window.addEventListener('scroll', () => {
+            const scrollLine = document.getElementById('scrollLine');
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollLine.style.width = scrollPercent + '%';
+        });
+
+        // ── Navbar Background on Scroll ──
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+            }
+        });
+
+        // ── Mobile Menu ──
+        const menuBtn = document.getElementById('menuBtn');
+        const menuClose = document.getElementById('menuClose');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuBtn.addEventListener('click', () => mobileMenu.classList.add('open'));
+        menuClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        });
+
+        // ── Scroll Reveal (Intersection Observer) ──
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .stagger').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ── Animated Stat Counters ──
+        const statObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counters = entry.target.querySelectorAll('[data-target]');
+                    counters.forEach(counter => {
+                        const target = parseInt(counter.getAttribute('data-target'));
+                        const duration = 2000;
+                        const step = target / (duration / 16);
+                        let current = 0;
+
+                        const updateCounter = () => {
+                            current += step;
+                            if (current < target) {
+                                counter.textContent = Math.floor(current);
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                counter.textContent = target.toLocaleString();
+                            }
+                        };
+
+                        updateCounter();
+                    });
+                    statObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const statsBar = document.getElementById('statsBar');
+        if (statsBar) statObserver.observe(statsBar);
+
+        // ── Update stat display format ──
+        // Fix the percentage and currency displays after counting
+        setTimeout(() => {
+            document.querySelectorAll('.stat-number').forEach(el => {
+                const span = el.querySelector('[data-target]');
+                if (span) return; // handled by counter
+                const target = el.getAttribute('data-target');
+                if (target) {
+                    // Already handled by counter animation
+                }
+            });
+        }, 3000);
+
+        // ── Smooth scroll for anchor links ──
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "InBoundReady",
+        "description": "AI-powered receptionist service for small businesses. Never miss another customer call.",
+        "url": "https://inboundready.com",
+        "telephone": "+12069813137",
+        "priceRange": "$$",
+        "image": "https://inboundready.com/assets/phone-logo.png",
+        "sameAs": [],
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "US"
+        },
+        "areaServed": {
+            "@type": "Country",
+            "name": "United States"
+        },
+        "serviceType": "AI Receptionist Service"
+    }
+    </script>
+</body>
+</html>
